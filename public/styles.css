@@ -15,5 +15,10 @@ footer {
   height: 400px;
   background-color: rgba(88, 88, 88, 0.476);
   color: white;
-  padding: 5%;
+  padding: 50px;
+}
+
+.responsive img {
+  margin-left: 10px;
+  margin-right: 10px;
 }
