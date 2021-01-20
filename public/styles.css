@@ -10,3 +10,10 @@ nav,
 footer {
   background-color: #ffa45b;
 }
+
+.show-jumbo-container {
+  height: 400px;
+  background-color: rgba(88, 88, 88, 0.476);
+  color: white;
+  padding: 5%;
+}

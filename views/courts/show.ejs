@@ -1,2 +1,26 @@
 <% layout('layouts/boilerplate.ejs') %>
-<h1><%= court.title %></h1>
+
+<div
+  class="jumbotron jumbotron-fluid"
+  style="
+    background-image: url(<%= court.image %>);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 600px;
+  "
+>
+  <div class="d-flex align-items-center" style="height: 100%">
+    <div class="container show-jumbo-container">
+      <h1 class="display-4"><%= court.title %></h1>
+      <p class="lead"><%= court.description %></p>
+      <p><%= court.location %></p>
+      <hr />
+      <p>
+        Court Hours: <%= court.opening_hours %>am - <%= court.closing_hours %>pm
+      </p>
+      <p>Type: <%= court.court %> court</p>
+      <p>Avg number of players: <%= court.avgNumberOfPlayers %></p>
+    </div>
+  </div>
+</div>
