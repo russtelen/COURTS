@@ -6,7 +6,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const mongoose = require("mongoose");
-
+const Court = require("./models/courts");
 // ==============================================
 // CONFIG
 // =============================================
