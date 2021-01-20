@@ -56,6 +56,15 @@ app.get("/", (req, res) => {
   res.render("home");
 });
 
+// get
+// all courts
+// render index.ejs
+app.get("/courts", async (req, res) => {
+  const courts = await Court.find({});
+
+  res.render("courts/index", { courts });
+});
+
 // ==============================================
 // LISTEN
 // =============================================

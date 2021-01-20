@@ -51,7 +51,7 @@ const seedDB = async () => {
       title: `${descriptors[randomTitle1]} ${places[randomTitle2]}`,
       image: image[randomImage],
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
       opening_hours: 7,
       closing_hours: 9,
