@@ -47,7 +47,7 @@ mongoose
     console.log(e);
   });
 
-// ==============================================
+// =============================================
 // ROUTES
 // =============================================
 // get
@@ -63,6 +63,16 @@ app.get("/courts", async (req, res) => {
   const courts = await Court.find({});
 
   res.render("courts/index", { courts });
+});
+
+// get
+// one court
+// render show.ejs
+app.get("/courts/:id", async (req, res) => {
+  const { id } = req.params;
+  const court = await Court.findById(id);
+
+  res.render("courts/show", { court });
 });
 
 // ==============================================
