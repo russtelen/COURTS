@@ -53,7 +53,7 @@ mongoose
 // get
 // home page
 app.get("/", (req, res) => {
-  res.send("It works!");
+  res.render("home");
 });
 
 // ==============================================
