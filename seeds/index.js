@@ -30,13 +30,14 @@ mongoose
 const seedDB = async () => {
   await Court.deleteMany({});
 
+  let imageSize = "/286x180";
   let indoorOutdoor = ["indoor", "outdoor"];
   let image = [
-    "https://source.unsplash.com/collection/1841259",
-    "https://source.unsplash.com/collection/9454911",
-    "https://source.unsplash.com/collection/173",
-    "https://source.unsplash.com/collection/3331316",
-    "https://source.unsplash.com/collection/3161728",
+    `https://source.unsplash.com/collection/1841259${imageSize}`,
+    `https://source.unsplash.com/collection/9454911${imageSize}`,
+    `https://source.unsplash.com/collection/173${imageSize}`,
+    `https://source.unsplash.com/collection/3331316${imageSize}`,
+    `https://source.unsplash.com/collection/3161728${imageSize}`,
   ];
 
   for (let i = 0; i < 15; i++) {
