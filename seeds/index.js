@@ -30,7 +30,7 @@ mongoose
 const seedDB = async () => {
   await Court.deleteMany({});
 
-  let imageSize = "/286x180";
+  let imageSize = "/800x600";
   let indoorOutdoor = ["indoor", "outdoor"];
   let image = [
     `https://source.unsplash.com/collection/1841259${imageSize}`,
