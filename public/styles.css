@@ -1,14 +1,15 @@
 body {
-  background-color: #fbf6f0;
+  background-color: #f2efea;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 .card-button {
-  background-color: #ffda77;
+  background-color: #af6b58;
 }
 
 nav,
 footer {
-  background-color: #ffa45b;
+  background-color: #556052;
 }
 
 .show-jumbo-container {
