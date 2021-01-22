@@ -99,7 +99,15 @@ app.post("/courts", async (req, res) => {
   res.redirect("/courts");
 });
 
-// ==============================================
+// put
+// update court selected by id
+app.put("/courts/:id", async (req, res) => {
+  const { id } = req.params;
+  await Court.findOneAndUpdate({ _id: id }, req.body);
+  res.redirect(`/courts/${id}`);
+});
+
+//==============================================
 // LISTEN
 // =============================================
 let port = process.env.port;
