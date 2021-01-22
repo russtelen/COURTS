@@ -7,13 +7,17 @@ body {
   background-color: #af6b58;
 }
 
+.edit-button {
+  background-color: #89b8d5;
+  color: white;
+}
+
 nav,
 footer {
   background-color: #556052;
 }
 
 .show-jumbo-container {
-  height: 400px;
   background-color: rgba(88, 88, 88, 0.476);
   color: white;
   padding: 50px;
