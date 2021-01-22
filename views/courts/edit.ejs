@@ -15,6 +15,8 @@
           value="<%= court.title %>"
           required
         />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please enter court name</div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="image">Image</label>
@@ -27,6 +29,8 @@
           value="<%= court.image %>"
           required
         />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please enter Image URL link</div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="location">Location</label>
@@ -40,6 +44,8 @@
             value="<%= court.location %>"
             required
           />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter location</div>
         </div>
       </div>
       <div class="row">
@@ -57,6 +63,8 @@
               value="<%= court.opening_hours %>"
               required
             />
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Please enter opening hours</div>
           </div>
         </div>
         <div class="mb-3 col-6">
@@ -73,6 +81,8 @@
               value="<%= court.closing_hours %>"
               required
             />
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Please enter closing hours</div>
           </div>
         </div>
       </div>
@@ -89,6 +99,8 @@
             <option value="indoor" <%= court.court === 'indoor' ? 'selected' : ''%>>Indoor</option>
             <option value="outdoor" <%= court.court === 'outdoor' ? 'selected' : ''%>>Outdoor</option>
           </select>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please choose court type</div>
         </div>
       </div>
       <div class="mb-3">
@@ -106,6 +118,8 @@
             value="<%= court.avgNumberOfPlayers %>"
             required
           />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter avg # of players</div>
         </div>
       </div>
       <div class="mb-3">
@@ -118,6 +132,8 @@
           class="form-control"
           required
         ><%= court.description %></textarea>
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please enter description</div>
       </div>
       <button type="submit" class="btn btn-success mb-3">Update Court</button>
     </form>
