@@ -82,6 +82,15 @@ app.get("/courts/:id", async (req, res) => {
   res.render("courts/show", { court });
 });
 
+// get
+// form to add new court
+// render new.ejs
+app.get("/courts/:id/edit", async (req, res) => {
+  const { id } = req.params;
+  const court = await Court.findOne({ _id: id });
+  res.render("courts/edit", { court });
+});
+
 // post
 // new court
 app.post("/courts", async (req, res) => {
