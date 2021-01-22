@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const Court = require("./models/courts");
 const catchAsync = require("./utils/catchAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+const { courtJoiSchema } = require("./utils/joiSchemas");
 // ==============================================
 // CONFIG
 // =============================================
@@ -48,6 +49,20 @@ mongoose
     console.log("MONGO CONNECTION ERROR :(");
     console.log(e);
   });
+
+// ==============================================
+// CUSTOM MIDDLEWARES
+// ==============================================
+const validateCourt = (req, res, next) => {
+  const { error } = courtJoiSchema.validate(req.body);
+
+  if (error) {
+    const msg = error.details.map((e) => e.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
 
 // =============================================
 // ROUTES
@@ -109,6 +124,7 @@ app.get(
 // new court
 app.post(
   "/courts",
+  validateCourt,
   catchAsync(async (req, res) => {
     const court = new Court(req.body);
     await court.save();
@@ -120,6 +136,7 @@ app.post(
 // update court selected by id
 app.put(
   "/courts/:id",
+  validateCourt,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     await Court.findOneAndUpdate({ _id: id }, req.body, {
