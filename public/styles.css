@@ -15,6 +15,11 @@ body {
   color: white;
 }
 
+.delete-button {
+  background-color: #c46e6e;
+  color: white;
+}
+
 nav,
 footer {
   background-color: #556052;

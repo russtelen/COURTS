@@ -103,8 +103,18 @@ app.post("/courts", async (req, res) => {
 // update court selected by id
 app.put("/courts/:id", async (req, res) => {
   const { id } = req.params;
-  await Court.findOneAndUpdate({ _id: id }, req.body);
+  await Court.findOneAndUpdate({ _id: id }, req.body, {
+    useFindAndModify: false,
+  });
   res.redirect(`/courts/${id}`);
+});
+
+// delete
+// delete court selected by id
+app.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params;
+  await Court.findByIdAndDelete(id);
+  res.redirect("/courts");
 });
 
 //==============================================
