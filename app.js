@@ -7,6 +7,8 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const mongoose = require("mongoose");
 const Court = require("./models/courts");
+const catchAsync = require("./utils/catchAsync.js");
+const ExpressError = require("./utils/ExpressError.js");
 // ==============================================
 // CONFIG
 // =============================================
@@ -59,62 +61,98 @@ app.get("/", (req, res) => {
 // get
 // all courts
 // render index.ejs
-app.get("/courts", async (req, res) => {
-  const courts = await Court.find({});
+app.get(
+  "/courts",
+  catchAsync(async (req, res) => {
+    const courts = await Court.find({});
 
-  res.render("courts/index", { courts });
-});
+    res.render("courts/index", { courts });
+  })
+);
 
 // get
 // form to add new court
 // render new.ejs
-app.get("/courts/new", async (req, res) => {
-  res.render("courts/new");
-});
+app.get(
+  "/courts/new",
+  catchAsync(async (req, res) => {
+    res.render("courts/new");
+  })
+);
 
 // get
 // one court
 // render show.ejs
-app.get("/courts/:id", async (req, res) => {
-  const { id } = req.params;
-  const court = await Court.findById(id);
+app.get(
+  "/courts/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const court = await Court.findById(id);
 
-  res.render("courts/show", { court });
-});
+    res.render("courts/show", { court });
+  })
+);
 
 // get
 // form to add new court
 // render new.ejs
-app.get("/courts/:id/edit", async (req, res) => {
-  const { id } = req.params;
-  const court = await Court.findOne({ _id: id });
-  res.render("courts/edit", { court });
-});
+app.get(
+  "/courts/:id/edit",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const court = await Court.findOne({ _id: id });
+    res.render("courts/edit", { court });
+  })
+);
 
 // post
 // new court
-app.post("/courts", async (req, res) => {
-  const court = new Court(req.body);
-  await court.save();
-  res.redirect("/courts");
-});
+app.post(
+  "/courts",
+  catchAsync(async (req, res) => {
+    const court = new Court(req.body);
+    await court.save();
+    res.redirect("/courts");
+  })
+);
 
 // put
 // update court selected by id
-app.put("/courts/:id", async (req, res) => {
-  const { id } = req.params;
-  await Court.findOneAndUpdate({ _id: id }, req.body, {
-    useFindAndModify: false,
-  });
-  res.redirect(`/courts/${id}`);
-});
+app.put(
+  "/courts/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    await Court.findOneAndUpdate({ _id: id }, req.body, {
+      useFindAndModify: false,
+    });
+    res.redirect(`/courts/${id}`);
+  })
+);
 
 // delete
 // delete court selected by id
-app.delete("/courts/:id", async (req, res) => {
-  const { id } = req.params;
-  await Court.findByIdAndDelete(id);
-  res.redirect("/courts");
+app.delete(
+  "/courts/:id",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    await Court.findByIdAndDelete(id);
+    res.redirect("/courts");
+  })
+);
+
+// ==============================================
+// ERROR HANDLERS
+// =============================================
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Page not found", 404));
+});
+
+app.use((err, req, res, next) => {
+  const { statusCode = 500 } = err;
+  if (!err.message) {
+    err.message = "Oh no, Something went wrong";
+  }
+  res.status(statusCode).render("error", { err });
 });
 
 //==============================================
