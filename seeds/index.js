@@ -5,10 +5,12 @@ const mongoose = require("mongoose");
 const Court = require("../models/courts.js"); // require model
 const cities = require("./cities");
 const { places, descriptors } = require("./seedHelpers");
-
+const dotenv = require("dotenv");
 //=============================
 // CONFIG
 //=============================
+// Read .env file
+dotenv.config({ path: "../.env" });
 
 let localDb = "mongodb://localhost:27017/courts";
 let atlasDb = process.env.db;
@@ -28,6 +30,19 @@ mongoose
   });
 
 const seedDB = async () => {
+  await Court.create({
+    title: "Richmond Olympic Oval",
+    image:
+      "https://www.fastepp.com/wp-content/uploads/FE-Richmond-Olympic-Oval-8-Credit-Nic-Lehoux-and-Cannon-Design-1.jpg",
+    description:
+      "The Richmond Olympic Oval is an indoor multi-sports arena in the Canadian city of Richmond, British Columbia. The oval was built for the 2010 Winter Olympics and was originally configured with a speed skating rink.",
+    location: "Richmond, BC",
+    opening_hours: 7,
+    closing_hours: 10,
+    court: "indoor",
+    avgNumberOfPlayers: 107,
+  });
+
   await Court.deleteMany({});
 
   await Court.insertMany([
