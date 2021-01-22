@@ -79,6 +79,28 @@ const seedDB = async () => {
       court: "outdoor",
       avgNumberOfPlayers: 20,
     },
+    {
+      title: "People’s place",
+      image: "https://media.timeout.com/images/105707139/1372/772/image.jpg",
+      description:
+        " Designed by local street artist Xeme, this stunning large-scale artwork brings street art culture to neighbourhoods and communities that may not have everyday access to public art.",
+      location: "Hong Kong",
+      opening_hours: 7,
+      closing_hours: 11,
+      court: "outdoor",
+      avgNumberOfPlayers: 16,
+    },
+    {
+      title: "Choi Hung Estate",
+      image: "https://i.imgur.com/nxKpeJ1.jpg",
+      description:
+        "Basketball court at Choi Hung Estate, one of the oldest public housing estates in Hong Kong",
+      location: "Kowloon",
+      opening_hours: 8,
+      closing_hours: 10,
+      court: "outdoor",
+      avgNumberOfPlayers: 15,
+    },
   ]);
 
   let imageSize = "/800x600";
@@ -91,7 +113,7 @@ const seedDB = async () => {
     `https://source.unsplash.com/collection/3161728${imageSize}`,
   ];
 
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 3; i++) {
     let random1000 = Math.floor(Math.random() * 1000);
     let randomTitle1 = Math.floor(Math.random() * 18);
     let randomTitle2 = Math.floor(Math.random() * 18);
