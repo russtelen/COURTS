@@ -10,6 +10,7 @@ const Court = require("./models/courts");
 const catchAsync = require("./utils/catchAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { courtJoiSchema } = require("./utils/joiSchemas");
+const dotenv = require("dotenv");
 // ==============================================
 // CONFIG
 // =============================================
@@ -32,6 +33,9 @@ app.set("views", path.join(__dirname, "/views"));
 
 // Override with POST having ?_method=PATCH or DELETE
 app.use(methodOverride("_method"));
+
+// Read .env file
+dotenv.config();
 
 // Connect Mongoose
 let localDb = "mongodb://localhost:27017/courts";
