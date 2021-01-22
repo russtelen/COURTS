@@ -37,7 +37,7 @@ app.use(methodOverride("_method"));
 let localDb = "mongodb://localhost:27017/courts";
 let atlasDb = process.env.db;
 mongoose
-  .connect(localDb, {
+  .connect(atlasDb, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
