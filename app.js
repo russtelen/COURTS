@@ -111,7 +111,7 @@ app.put("/courts/:id", async (req, res) => {
 
 // delete
 // delete court selected by id
-app.delete("/delete/:id", async (req, res) => {
+app.delete("/courts/:id", async (req, res) => {
   const { id } = req.params;
   await Court.findByIdAndDelete(id);
   res.redirect("/courts");
