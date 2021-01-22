@@ -66,6 +66,13 @@ app.get("/courts", async (req, res) => {
 });
 
 // get
+// form to add new court
+// render new.ejs
+app.get("/courts/new", async (req, res) => {
+  res.render("courts/new");
+});
+
+// get
 // one court
 // render show.ejs
 app.get("/courts/:id", async (req, res) => {

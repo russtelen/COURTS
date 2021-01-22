@@ -1,0 +1,119 @@
+<% layout('layouts/boilerplate.ejs') %>
+
+<div class="row my-5">
+  <h1 class="text-center">Add New Court</h1>
+  <div class="col-6 offset-3">
+    <form action="/court" method="POST" novalidate class="validated-form">
+      <div class="mb-3">
+        <label class="form-label" for="title">Court Name</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          placeholder="title"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="image">Image</label>
+        <input
+          type="text"
+          id="image"
+          name="image"
+          placeholder="image url"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="location">Location</label>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="location"
+            placeholder="location"
+            name="location"
+            required
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="mb-3 col-6">
+          <label class="form-label" for="opening_hours">Opening Hours</label>
+          <div class="input-group">
+            <input
+              type="number"
+              class="form-control"
+              id="opening_hours"
+              placeholder="hour of the day"
+              name="opening_hours"
+              min="0"
+              max="12"
+              required
+            />
+          </div>
+        </div>
+        <div class="mb-3 col-6">
+          <label class="form-label" for="closing_hours">Closing Hours</label>
+          <div class="input-group">
+            <input
+              type="number"
+              class="form-control"
+              id="closing_hours"
+              placeholder="hour of the day"
+              name="closing_hours"
+              min="0"
+              max="12"
+              required
+            />
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="court">Court Type</label>
+        <div class="input-group">
+          <select
+            multiple
+            class="form-control"
+            id="court"
+            name="court"
+            required
+          >
+            <option value="indoor">Indoor</option>
+            <option value="outdoor">Outdoor</option>
+          </select>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="avgNumberOfPlayers"
+          >Average # of players</label
+        >
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="avgNumberOfPlayers"
+            placeholder="avg # of players"
+            name="avgNumberOfPlayers"
+            required
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea
+          type="text"
+          id="description"
+          name="description"
+          placeholder="description"
+          class="form-control"
+          required
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-success mb-3">Submit</button>
+    </form>
+    <a href="/courts">All Courts</a>
+  </div>
+</div>
