@@ -82,6 +82,14 @@ app.get("/courts/:id", async (req, res) => {
   res.render("courts/show", { court });
 });
 
+// post
+// new court
+app.post("/courts", async (req, res) => {
+  const court = new Court(req.body);
+  await court.save();
+  res.redirect("/courts");
+});
+
 // ==============================================
 // LISTEN
 // =============================================

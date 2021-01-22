@@ -3,7 +3,7 @@
 <div class="row my-5">
   <h1 class="text-center">Add New Court</h1>
   <div class="col-6 offset-3">
-    <form action="/court" method="POST" novalidate class="validated-form">
+    <form action="/courts" method="POST" novalidate class="validated-form">
       <div class="mb-3">
         <label class="form-label" for="title">Court Name</label>
         <input
@@ -92,11 +92,12 @@
         >
         <div class="input-group">
           <input
-            type="text"
+            type="number"
             class="form-control"
             id="avgNumberOfPlayers"
             placeholder="avg # of players"
             name="avgNumberOfPlayers"
+            min="0"
             required
           />
         </div>
