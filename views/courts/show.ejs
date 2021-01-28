@@ -21,6 +21,11 @@
       </p>
       <p>Type: <%= court.court %> court</p>
       <p>Avg number of players: <%= court.avgNumberOfPlayers %></p>
+      <% if(averageRating != 0) { %>
+      <p>Average Rating: <%= averageRating %> Stars</p>
+      <% } else { %>
+      <p>No ratings yet</p>
+      <% } %>
 
       <a href="/courts/<%= court._id %>/edit" class="btn btn-sm edit-button"
         >Edit Court</a
@@ -47,7 +52,7 @@
   </div>
 </div> -->
 
-<p class="text-center mt-5 display-4">Court Reviews</p>
+<p class="text-center mt-5 display-4">Add A Review</p>
 <div class="container my-5 court-reviews">
   <form
     class="validated-form"
@@ -86,7 +91,9 @@
 
     <button type="submit" class="btn btn-success mb-3">Submit</button>
   </form>
+</div>
 
+<div class="container">
   <% if(court.reviews.length > 0){ %>
   <ul class="list-unstyled">
     <li class="media">
