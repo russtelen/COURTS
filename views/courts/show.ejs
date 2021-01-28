@@ -49,7 +49,12 @@
 
 <p class="text-center mt-5 display-4">Court Reviews</p>
 <div class="container my-5 court-reviews">
-  <form action="/courts/<%= court._id %>/reviews" method="POST">
+  <form
+    class="validated-form"
+    novalidate
+    action="/courts/<%= court._id %>/reviews"
+    method="POST"
+  >
     <div class="mb-3">
       <label class="form-label" for="rating">Rating</label>
       <div class="input-group">
@@ -60,6 +65,8 @@
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please select your rating</div>
       </div>
     </div>
     <div class="mb-3">
@@ -73,7 +80,10 @@
         rows="6"
         required
       ></textarea>
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please enter your review</div>
     </div>
+
     <button type="submit" class="btn btn-success mb-3">Submit</button>
   </form>
 
