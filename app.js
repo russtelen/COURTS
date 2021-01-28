@@ -10,7 +10,7 @@ const Court = require("./models/courts");
 const Review = require("./models/reviews");
 const catchAsync = require("./utils/catchAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const { courtJoiSchema } = require("./utils/joiSchemas");
+const { courtJoiSchema, reviewSchema } = require("./utils/joiSchemas");
 const dotenv = require("dotenv");
 // ==============================================
 // CONFIG
@@ -60,6 +60,17 @@ mongoose
 // ==============================================
 const validateCourt = (req, res, next) => {
   const { error } = courtJoiSchema.validate(req.body);
+
+  if (error) {
+    const msg = error.details.map((e) => e.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+const validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
 
   if (error) {
     const msg = error.details.map((e) => e.message).join(",");
@@ -170,6 +181,7 @@ app.delete(
 // one review associated to a court
 app.post(
   "/courts/:id/reviews",
+  validateReview,
   catchAsync(async (req, res) => {
     // get court id from params
     const { id } = req.params;
