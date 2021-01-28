@@ -109,7 +109,7 @@ app.get(
   "/courts/:id",
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const court = await Court.findById(id);
+    const court = await Court.findById(id).populate("reviews");
 
     res.render("courts/show", { court });
   })
