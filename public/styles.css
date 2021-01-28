@@ -39,3 +39,8 @@ footer {
 .responsive {
   overflow: hidden;
 }
+
+.court-reviews {
+  padding: 5%;
+  background-color: rgb(231, 227, 153);
+}

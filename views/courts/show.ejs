@@ -36,8 +36,7 @@
   </div>
 </div>
 
-<p class="text-center mt-5 display-4">Court Images</p>
-
+<!-- <p class="text-center mt-5 display-4">Court Images</p>
 <div class="my-4">
   <div class="responsive">
     <img src="https://source.unsplash.com/collection/1841259/800x600" alt="" />
@@ -46,45 +45,69 @@
     <img src="https://source.unsplash.com/collection/3331316/800x600" alt="" />
     <img src="https://source.unsplash.com/collection/3161728/800x600" alt="" />
   </div>
+</div> -->
+
+<p class="text-center mt-5 display-4">Court Reviews</p>
+<div class="container my-5 court-reviews">
+  <form action="/courts:id/reviews" method="POST">
+    <div class="mb-3">
+      <label class="form-label" for="rating">Rating</label>
+      <div class="input-group">
+        <select class="form-control" id="rating" name="rating" required>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="body">Review</label>
+      <textarea
+        type="text"
+        id="body"
+        name="body"
+        placeholder="This court is amazing - lots of good people"
+        class="form-control"
+        rows="6"
+        required
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn-success mb-3">Submit</button>
+  </form>
 </div>
 
-<p class="text-center mt-5 display-4">Comments</p>
-<div class="container my-5">
-  <div class="media">
-    <img
-      class="mr-3"
-      src="https://picsum.photos/64"
-      alt="Generic placeholder image"
-    />
-    <div class="media-body">
-      <h5 class="mt-0">Russ Telen</h5>
-      Lot's of great players in this court. Everyones nice!!
-    </div>
+<!-- <div class="media">
+  <img
+    class="mr-3"
+    src="https://picsum.photos/64"
+    alt="Generic placeholder image"
+  />
+  <div class="media-body">
+    <h5 class="mt-0">Russ Telen</h5>
+    Lot's of great players in this court. Everyones nice!!
   </div>
-  <div class="media">
-    <img
-      class="mr-3"
-      src="https://picsum.photos/64"
-      alt="Generic placeholder image"
-    />
-    <div class="media-body">
-      <h5 class="mt-0">Pat Fortaleza</h5>
-      Guys out here dont give a F*CK!!!
-    </div>
-  </div>
-  <div class="media">
-    <img
-      class="mr-3"
-      src="https://picsum.photos/64"
-      alt="Generic placeholder image"
-    />
-    <div class="media-body">
-      <h5 class="mt-0">Kalvin Tang</h5>
-      LOL broke all yall ankles. Kobe !!
-    </div>
-  </div>
-
-  <textarea name="" id="" cols="50" rows="5"></textarea>
-  <br />
-  <button class="btn card-button">Add Comment</button>
 </div>
+<div class="media">
+  <img
+    class="mr-3"
+    src="https://picsum.photos/64"
+    alt="Generic placeholder image"
+  />
+  <div class="media-body">
+    <h5 class="mt-0">Pat Fortaleza</h5>
+    Guys out here dont give a F*CK!!!
+  </div>
+</div>
+<div class="media">
+  <img
+    class="mr-3"
+    src="https://picsum.photos/64"
+    alt="Generic placeholder image"
+  />
+  <div class="media-body">
+    <h5 class="mt-0">Kalvin Tang</h5>
+    LOL broke all yall ankles. Kobe !!
+  </div>
+</div> -->
