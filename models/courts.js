@@ -3,6 +3,7 @@
 //==========================================
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Review = require("./reviews.js");
 
 //==========================================
 // SET UP SCHEMA
@@ -46,6 +47,12 @@ const courtSchema = new Schema({
     required: true,
     min: 0,
   },
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
 });
 
 //==========================================
