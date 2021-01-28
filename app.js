@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const mongoose = require("mongoose");
 const Court = require("./models/courts");
+const Review = require("./models/reviews");
 const catchAsync = require("./utils/catchAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { courtJoiSchema } = require("./utils/joiSchemas");
@@ -71,6 +72,8 @@ const validateCourt = (req, res, next) => {
 // =============================================
 // ROUTES
 // =============================================
+// COURTS ROUTES
+//-----------------------
 // get
 // home page
 app.get("/", (req, res) => {
@@ -158,6 +161,28 @@ app.delete(
     const { id } = req.params;
     await Court.findByIdAndDelete(id);
     res.redirect("/courts");
+  })
+);
+
+// REVIEW ROUTES
+//-----------------------
+// post
+// one review associated to a court
+app.post(
+  "/courts/:id/reviews",
+  catchAsync(async (req, res) => {
+    // get court id from params
+    const { id } = req.params;
+    // find court by :id
+    const court = await Court.findById(id);
+    // create new review based off req.body
+    const review = new Review(req.body);
+    //push review in court.reviews array (model)
+    court.reviews.push(review);
+    //save both review and court
+    await court.save();
+    await review.save();
+    res.redirect(`/courts/${id}`);
   })
 );
 
