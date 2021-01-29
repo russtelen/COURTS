@@ -11,7 +11,11 @@ const Review = require("./models/reviews");
 const Photo = require("./models/photos");
 const catchAsync = require("./utils/catchAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const { courtJoiSchema, reviewSchema } = require("./utils/joiSchemas");
+const {
+  courtJoiSchema,
+  reviewSchema,
+  photoSchema,
+} = require("./utils/joiSchemas");
 const dotenv = require("dotenv");
 // ==============================================
 // CONFIG
@@ -81,6 +85,17 @@ const validateReview = (req, res, next) => {
   }
 };
 
+const validatePhoto = (req, res, next) => {
+  const { error } = photoSchema.validate(req.body);
+
+  if (error) {
+    const msg = error.details.map((e) => e.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
 // =============================================
 // ROUTES
 // =============================================
@@ -138,8 +153,6 @@ app.get(
 
       return averageRating;
     };
-
-    console.log(court);
 
     res.render("courts/show", { court, getAverageRating });
   })
@@ -243,6 +256,7 @@ app.delete(
 // one photo associated to a court
 app.post(
   "/courts/:id/photos",
+  validatePhoto,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const court = await Court.findById(id);
