@@ -1,40 +1,14 @@
-// ==========================
-// SLICK JS
-// ==========================
-$(document).ready(function () {
-  $(".responsive").slick({
-    infinite: true,
-    autoplay: true,
-    speed: 300,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  });
-});
+// =================================
+// Toggle Form
+// ==================================
+toggleForm = () => {
+  var x = document.getElementById("image-form");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+};
 
 // =================================
 // BOOTSTRAP CLIENT SIDE VALIDATION
@@ -64,3 +38,21 @@ $(document).ready(function () {
     false
   );
 })();
+
+// =================================
+// SPLIDE JS
+// ==================================
+document.addEventListener("DOMContentLoaded", function () {
+  new Splide(".splide", {
+    type: "loop",
+    perPage: 3,
+    perMove: 1,
+    autplay: true,
+    breakpoints: {
+      600: {
+        perPage: 1,
+        gap: "1rem",
+      },
+    },
+  }).mount();
+});

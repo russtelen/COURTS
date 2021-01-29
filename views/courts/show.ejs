@@ -48,16 +48,66 @@
   </div>
 </div>
 
-<!-- <p class="text-center mt-5 display-4">Court Images</p>
-<div class="my-4">
-  <div class="responsive">
-    <img src="https://source.unsplash.com/collection/1841259/800x600" alt="" />
-    <img src="https://source.unsplash.com/collection/9454911/800x600" alt="" />
-    <img src="https://source.unsplash.com/collection/173/800x600" alt="" />
-    <img src="https://source.unsplash.com/collection/3331316/800x600" alt="" />
-    <img src="https://source.unsplash.com/collection/3161728/800x600" alt="" />
+<p class="text-center mt-5 display-4">Court Images</p>
+<div class="text-center">
+  <button class="btn btn-sm btn-info text-white" onclick="toggleForm()">
+    New Photo <i class="fas fa-plus-circle"></i>
+  </button>
+  <a
+    href="/courts/<%= court._id %>/photos"
+    class="btn btn-sm btn-warning text-white"
+  >
+    Manage Photos <i class="fas fa-cogs"></i>
+  </a>
+</div>
+<div class="container mt-2" id="image-form" style="display: none">
+  <form
+    class="validated-form"
+    novalidate
+    action="/courts/<%= court._id %>/photos"
+    method="POST"
+  >
+    <div class="row">
+      <div class="col-8 offset-1">
+        <label class="form-label" for="image" hidden>IMG</label>
+        <input
+          type="url"
+          id="image"
+          name="image"
+          placeholder="https://example.com"
+          class="form-control"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please enter Image URL link</div>
+      </div>
+      <div class="col-3">
+        <button class="btn btn-md btn-success">Add</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container mt-3">
+  <% if(court.photos.length > 0) { %>
+  <div class="splide">
+    <div class="splide__track">
+      <div class="splide__list">
+        <% court.photos.map(photo => { %>
+        <img
+          class="splide__slide"
+          src="<%= photo.image %>"
+          alt="<%= photo.image %>"
+        />
+        <!-- <button class="btn btn-danger">DELETE</button> -->
+        <% }) %>
+      </div>
+    </div>
   </div>
-</div> -->
+  <% } else { %>
+  <p class="text-muted text-center">No Photos Yet</p>
+  <% } %>
+</div>
 
 <p class="text-center mt-5 display-4">Add A Review</p>
 <div class="container my-5 court-reviews">
@@ -70,13 +120,6 @@
     <div class="mb-3">
       <label class="form-label" for="rating">Rating</label>
       <div class="input-group">
-        <!-- <select class="form-control" id="rating" name="rating" required>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3" selected>3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select> -->
         <fieldset class="rating">
           <input type="radio" id="star5" name="rating" value="5" /><label
             for="star5"

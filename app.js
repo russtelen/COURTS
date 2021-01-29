@@ -8,9 +8,14 @@ const ejsMate = require("ejs-mate");
 const mongoose = require("mongoose");
 const Court = require("./models/courts");
 const Review = require("./models/reviews");
+const Photo = require("./models/photos");
 const catchAsync = require("./utils/catchAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const { courtJoiSchema, reviewSchema } = require("./utils/joiSchemas");
+const {
+  courtJoiSchema,
+  reviewSchema,
+  photoSchema,
+} = require("./utils/joiSchemas");
 const dotenv = require("dotenv");
 // ==============================================
 // CONFIG
@@ -80,6 +85,17 @@ const validateReview = (req, res, next) => {
   }
 };
 
+const validatePhoto = (req, res, next) => {
+  const { error } = photoSchema.validate(req.body);
+
+  if (error) {
+    const msg = error.details.map((e) => e.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
 // =============================================
 // ROUTES
 // =============================================
@@ -120,7 +136,9 @@ app.get(
   "/courts/:id",
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const court = await Court.findById(id).populate("reviews");
+    const court = await Court.findById(id)
+      .populate("reviews")
+      .populate("photos");
 
     const getAverageRating = () => {
       // get average rating of court
@@ -218,16 +236,55 @@ app.delete(
   "/courts/:courtId/reviews/:reviewId",
   catchAsync(async (req, res) => {
     const { courtId, reviewId } = req.params;
-
-    console.log(mongoose.Types.ObjectId.isValid(courtId));
-    // prints false
-    console.log(mongoose.Types.ObjectId.isValid(reviewId));
-    //prints true
-
     const court = await Court.findByIdAndUpdate(courtId, {
       $pull: { reviews: reviewId },
     });
     await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/courts/${court._id}`);
+  })
+);
+
+// PHOTO ROUTES
+//-----------------------
+// get
+// all photos
+app.get(
+  "/courts/:id/photos",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const court = await Court.findById(id).populate("photos");
+    var photos = court.photos;
+
+    res.render("photos/index", { photos, court });
+  })
+);
+
+// post
+// one photo associated to a court
+app.post(
+  "/courts/:id/photos",
+  validatePhoto,
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const court = await Court.findById(id);
+    const photo = new Photo(req.body);
+    court.photos.push(photo);
+    await court.save();
+    await photo.save();
+    res.redirect(`/courts/${id}`);
+  })
+);
+
+//delete
+//one photo associated to a court
+app.delete(
+  "/courts/:courtId/photos/:photoId",
+  catchAsync(async (req, res) => {
+    const { courtId, photoId } = req.params;
+    const court = await Court.findByIdAndUpdate(courtId, {
+      $pull: { photos: photoId },
+    });
+    await Photo.findByIdAndDelete(photoId);
     res.redirect(`/courts/${court._id}`);
   })
 );
