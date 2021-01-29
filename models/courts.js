@@ -4,6 +4,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./reviews.js");
+const Photo = require("./photos.js");
 
 //==========================================
 // SET UP SCHEMA
@@ -53,12 +54,19 @@ const courtSchema = new Schema({
       ref: "Review",
     },
   ],
+  photos: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Photo",
+    },
+  ],
 });
 
-// Mongoose middleware to delete reviews when campground is deleted
+// Mongoose middleware to delete reviews when court is deleted
 courtSchema.post("findOneAndDelete", async function (court) {
   if (court) {
     await Review.deleteMany({ _id: { $in: court.reviews } });
+    await Photo.deleteMany({ _id: { $in: court.photos } });
   }
 });
 
