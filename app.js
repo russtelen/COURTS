@@ -252,6 +252,22 @@ app.delete(
 
 // PHOTO ROUTES
 //-----------------------
+// get
+// all photos
+app.get(
+  "/courts/:id/photos",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const court = await Court.findById(id).populate("photos");
+    var photos = court.photos;
+    var photoArray = photos.map((p) => {
+      return p.image;
+    });
+
+    res.render("photos/index", { photos: photoArray });
+  })
+);
+
 // post
 // one photo associated to a court
 app.post(

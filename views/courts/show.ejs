@@ -53,6 +53,12 @@
   <button class="btn btn-sm btn-info text-white" onclick="toggleForm()">
     New Photo <i class="fas fa-plus-circle"></i>
   </button>
+  <a
+    href="/courts/<%= court._id %>/photos"
+    class="btn btn-sm btn-warning text-white"
+  >
+    Manage Photos <i class="fas fa-cogs"></i>
+  </a>
 </div>
 <div class="container mt-2" id="image-form" style="display: none">
   <form
@@ -93,6 +99,7 @@
           src="<%= photo.image %>"
           alt="<%= photo.image %>"
         />
+        <!-- <button class="btn btn-danger">DELETE</button> -->
         <% }) %>
       </div>
     </div>
