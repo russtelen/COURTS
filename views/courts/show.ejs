@@ -48,8 +48,35 @@
   </div>
 </div>
 
-<!-- <p class="text-center mt-5 display-4">Court Images</p>
-<div class="my-4">
+<p class="text-center mt-5 display-4">Court Images</p>
+<div class="text-center">
+  <button class="btn btn-sm btn-info text-white" onclick="toggleForm()">
+    New Photo <i class="fas fa-plus-circle"></i>
+  </button>
+</div>
+<div class="container mt-2" id="image-form" style="display: none">
+  <form action="">
+    <div class="row">
+      <div class="col-8 offset-1">
+        <input
+          type="text"
+          id="image"
+          name="image"
+          placeholder="image url"
+          class="form-control"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please enter Image URL link</div>
+      </div>
+      <div class="col-3">
+        <button class="btn btn-md btn-success">Add</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- <div class="my-4">
   <div class="responsive">
     <img src="https://source.unsplash.com/collection/1841259/800x600" alt="" />
     <img src="https://source.unsplash.com/collection/9454911/800x600" alt="" />
