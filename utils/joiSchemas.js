@@ -10,3 +10,8 @@ module.exports.courtJoiSchema = Joi.object({
   court: Joi.string().required(),
   avgNumberOfPlayers: Joi.number().required().min(0),
 });
+
+module.exports.reviewSchema = Joi.object({
+  body: Joi.string().required(),
+  rating: Joi.number().required().min(1).max(5),
+});

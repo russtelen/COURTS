@@ -3,6 +3,7 @@
 //==========================================
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Review = require("./reviews.js");
 
 //==========================================
 // SET UP SCHEMA
@@ -46,6 +47,19 @@ const courtSchema = new Schema({
     required: true,
     min: 0,
   },
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
+});
+
+// Mongoose middleware to delete reviews when campground is deleted
+courtSchema.post("findOneAndDelete", async function (court) {
+  if (court) {
+    await Review.deleteMany({ _id: { $in: court.reviews } });
+  }
 });
 
 //==========================================

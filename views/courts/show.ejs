@@ -21,6 +21,11 @@
       </p>
       <p>Type: <%= court.court %> court</p>
       <p>Avg number of players: <%= court.avgNumberOfPlayers %></p>
+      <% if(getAverageRating() > 0) { %>
+      <p>Average Rating: <%= getAverageRating() %> Stars</p>
+      <% } else { %>
+      <p>No ratings yet</p>
+      <% } %>
 
       <a href="/courts/<%= court._id %>/edit" class="btn btn-sm edit-button"
         >Edit Court</a
@@ -36,8 +41,7 @@
   </div>
 </div>
 
-<p class="text-center mt-5 display-4">Court Images</p>
-
+<!-- <p class="text-center mt-5 display-4">Court Images</p>
 <div class="my-4">
   <div class="responsive">
     <img src="https://source.unsplash.com/collection/1841259/800x600" alt="" />
@@ -46,45 +50,75 @@
     <img src="https://source.unsplash.com/collection/3331316/800x600" alt="" />
     <img src="https://source.unsplash.com/collection/3161728/800x600" alt="" />
   </div>
+</div> -->
+
+<p class="text-center mt-5 display-4">Add A Review</p>
+<div class="container my-5 court-reviews">
+  <form
+    class="validated-form"
+    novalidate
+    action="/courts/<%= court._id %>/reviews"
+    method="POST"
+  >
+    <div class="mb-3">
+      <label class="form-label" for="rating">Rating</label>
+      <div class="input-group">
+        <select class="form-control" id="rating" name="rating" required>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please select your rating</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="body">Review</label>
+      <textarea
+        type="text"
+        id="body"
+        name="body"
+        placeholder="This court is amazing - lots of good people"
+        class="form-control"
+        rows="6"
+        required
+      ></textarea>
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please enter your review</div>
+    </div>
+
+    <button type="submit" class="btn btn-success mb-3">Submit</button>
+  </form>
 </div>
 
-<p class="text-center mt-5 display-4">Comments</p>
-<div class="container my-5">
-  <div class="media">
-    <img
-      class="mr-3"
-      src="https://picsum.photos/64"
-      alt="Generic placeholder image"
-    />
-    <div class="media-body">
-      <h5 class="mt-0">Russ Telen</h5>
-      Lot's of great players in this court. Everyones nice!!
-    </div>
-  </div>
-  <div class="media">
-    <img
-      class="mr-3"
-      src="https://picsum.photos/64"
-      alt="Generic placeholder image"
-    />
-    <div class="media-body">
-      <h5 class="mt-0">Pat Fortaleza</h5>
-      Guys out here dont give a F*CK!!!
-    </div>
-  </div>
-  <div class="media">
-    <img
-      class="mr-3"
-      src="https://picsum.photos/64"
-      alt="Generic placeholder image"
-    />
-    <div class="media-body">
-      <h5 class="mt-0">Kalvin Tang</h5>
-      LOL broke all yall ankles. Kobe !!
-    </div>
-  </div>
-
-  <textarea name="" id="" cols="50" rows="5"></textarea>
-  <br />
-  <button class="btn card-button">Add Comment</button>
+<div class="container">
+  <% if(court.reviews.length > 0){ %>
+  <ul class="list-unstyled">
+    <li class="media">
+      <% court.reviews.map(review => { %>
+      <div class="media row">
+        <div class="media-body col-11">
+          <h5 class="mt-0">Rating: <%= review.rating %> stars</h5>
+          <%= review.body %>
+        </div>
+        <div class="col-1">
+          <form
+            action="/courts/<%= court._id %>/reviews/<%= review._id %>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-sm btn-danger">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </form>
+        </div>
+        <hr />
+      </div>
+      <% })%>
+    </li>
+  </ul>
+  <% } else { %>
+  <p class="text-muted">No Reviews Yet</p>
+  <% } %>
 </div>
