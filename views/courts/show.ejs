@@ -21,7 +21,7 @@
       </p>
       <p>Type: <%= court.court %> court</p>
       <p>Avg number of players: <%= court.avgNumberOfPlayers %></p>
-      <% if(averageRating != 0) { %>
+      <% if(averageRating > 0) { %>
       <p>Average Rating: <%= averageRating %> Stars</p>
       <% } else { %>
       <p>No ratings yet</p>
