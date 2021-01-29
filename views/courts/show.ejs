@@ -98,10 +98,20 @@
   <ul class="list-unstyled">
     <li class="media">
       <% court.reviews.map(review => { %>
-      <div class="media">
-        <div class="media-body">
+      <div class="media row">
+        <div class="media-body col-11">
           <h5 class="mt-0">Rating: <%= review.rating %> stars</h5>
           <%= review.body %>
+        </div>
+        <div class="col-1">
+          <form
+            action="/courts/<%= court._id %> /reviews/<%= review._id %>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-sm btn-danger">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </form>
         </div>
         <hr />
       </div>
