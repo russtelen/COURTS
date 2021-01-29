@@ -122,17 +122,21 @@ app.get(
     const { id } = req.params;
     const court = await Court.findById(id).populate("reviews");
 
-    // get average rating of court
-    var total = 0;
-    const ratingArray = court.reviews.map((review) => {
-      return review.rating;
-    });
-    ratingArray.forEach((rating) => {
-      total += rating;
-    });
-    var averageRating = total / ratingArray.length;
+    const getAverageRating = () => {
+      // get average rating of court
+      var total = 0;
+      const ratingArray = court.reviews.map((review) => {
+        return review.rating;
+      });
+      ratingArray.forEach((rating) => {
+        total += rating;
+      });
+      var averageRating = total / ratingArray.length;
 
-    res.render("courts/show", { court, averageRating });
+      return averageRating;
+    };
+
+    res.render("courts/show", { court, getAverageRating });
   })
 );
 
