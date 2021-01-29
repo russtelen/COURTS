@@ -55,6 +55,13 @@ const courtSchema = new Schema({
   ],
 });
 
+// Mongoose middleware to delete reviews when campground is deleted
+courtSchema.post("findOneAndDelete", async function (court) {
+  if (court) {
+    await Review.deleteMany({ _id: { $in: court.reviews } });
+  }
+});
+
 //==========================================
 // SET UP MODEL
 //==========================================

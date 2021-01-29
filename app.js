@@ -212,6 +212,26 @@ app.post(
   })
 );
 
+//delete
+//one review associated to a court
+app.delete(
+  "/courts/:courtId/reviews/:reviewId",
+  catchAsync(async (req, res) => {
+    const { courtId, reviewId } = req.params;
+
+    console.log(mongoose.Types.ObjectId.isValid(courtId));
+    // prints false
+    console.log(mongoose.Types.ObjectId.isValid(reviewId));
+    //prints true
+
+    const court = await Court.findByIdAndUpdate(courtId, {
+      $pull: { reviews: reviewId },
+    });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/courts/${court._id}`);
+  })
+);
+
 // ==============================================
 // ERROR HANDLERS
 // =============================================
