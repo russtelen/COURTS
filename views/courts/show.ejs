@@ -55,9 +55,15 @@
   </button>
 </div>
 <div class="container mt-2" id="image-form" style="display: none">
-  <form action="/courts/<%= court._id %>/photos" method="POST">
+  <form
+    class="validated-form"
+    novalidate
+    action="/courts/<%= court._id %>/photos"
+    method="POST"
+  >
     <div class="row">
       <div class="col-8 offset-1">
+        <label class="form-label" for="image" hidden>IMG</label>
         <input
           type="url"
           id="image"
