@@ -8,6 +8,7 @@ const ejsMate = require("ejs-mate");
 const mongoose = require("mongoose");
 const Court = require("./models/courts");
 const Review = require("./models/reviews");
+const Photo = require("./models/photos");
 const catchAsync = require("./utils/catchAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { courtJoiSchema, reviewSchema } = require("./utils/joiSchemas");
@@ -42,7 +43,7 @@ dotenv.config();
 let localDb = "mongodb://localhost:27017/courts";
 let atlasDb = process.env.db;
 mongoose
-  .connect(atlasDb, {
+  .connect(localDb, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -229,6 +230,23 @@ app.delete(
     });
     await Review.findByIdAndDelete(reviewId);
     res.redirect(`/courts/${court._id}`);
+  })
+);
+
+// PHOTO ROUTES
+//-----------------------
+// post
+// one photo associated to a court
+app.post(
+  "/courts/:id/photos",
+  catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const court = await Court.findById(id);
+    const photo = new Photo(req.body);
+    court.photos.push(photo);
+    await court.save();
+    await photo.save();
+    res.redirect(`/courts/${id}`);
   })
 );
 

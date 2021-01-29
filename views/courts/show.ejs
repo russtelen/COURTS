@@ -55,14 +55,14 @@
   </button>
 </div>
 <div class="container mt-2" id="image-form" style="display: none">
-  <form action="">
+  <form action="/courts/<%= court._id %>/photos" method="POST">
     <div class="row">
       <div class="col-8 offset-1">
         <input
-          type="text"
+          type="url"
           id="image"
           name="image"
-          placeholder="image url"
+          placeholder="https://example.com"
           class="form-control"
           required
         />
@@ -70,9 +70,7 @@
         <div class="invalid-feedback">Please enter Image URL link</div>
       </div>
       <div class="col-3">
-        <button class="btn btn-md btn-success" onclick="toggleForm()">
-          Add
-        </button>
+        <button class="btn btn-md btn-success">Add</button>
       </div>
     </div>
   </form>
