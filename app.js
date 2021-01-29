@@ -121,7 +121,9 @@ app.get(
   "/courts/:id",
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const court = await Court.findById(id).populate("reviews");
+    const court = await Court.findById(id)
+      .populate("reviews")
+      .populate("photos");
 
     const getAverageRating = () => {
       // get average rating of court
@@ -136,6 +138,8 @@ app.get(
 
       return averageRating;
     };
+
+    console.log(court);
 
     res.render("courts/show", { court, getAverageRating });
   })
