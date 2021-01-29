@@ -236,12 +236,6 @@ app.delete(
   "/courts/:courtId/reviews/:reviewId",
   catchAsync(async (req, res) => {
     const { courtId, reviewId } = req.params;
-
-    console.log(mongoose.Types.ObjectId.isValid(courtId));
-    // prints false
-    console.log(mongoose.Types.ObjectId.isValid(reviewId));
-    //prints true
-
     const court = await Court.findByIdAndUpdate(courtId, {
       $pull: { reviews: reviewId },
     });
@@ -260,11 +254,8 @@ app.get(
     const { id } = req.params;
     const court = await Court.findById(id).populate("photos");
     var photos = court.photos;
-    var photoArray = photos.map((p) => {
-      return p.image;
-    });
 
-    res.render("photos/index", { photos: photoArray });
+    res.render("photos/index", { photos, court });
   })
 );
 
@@ -281,6 +272,20 @@ app.post(
     await court.save();
     await photo.save();
     res.redirect(`/courts/${id}`);
+  })
+);
+
+//delete
+//one photo associated to a court
+app.delete(
+  "/courts/:courtId/photos/:photoId",
+  catchAsync(async (req, res) => {
+    const { courtId, photoId } = req.params;
+    const court = await Court.findByIdAndUpdate(courtId, {
+      $pull: { photos: photoId },
+    });
+    await Photo.findByIdAndDelete(photoId);
+    res.redirect(`/courts/${court._id}`);
   })
 );
 

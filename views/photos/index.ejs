@@ -1,7 +1,19 @@
 <% layout('layouts/boilerplate.ejs') %>
-
-<div>
-  <% photos.map(photo => { %>
-  <img src="<%= photo %>" alt="" />
-  <% }) %>
+<h1 class="text-center mt-5"><%= court.title %> Photos</h1>
+<a class="offset-2" href="/courts/<%= court._id %> ">Back to Court</a>
+<div class="container mt-5">
+  <div class="row">
+    <% photos.map(photo => { %>
+    <div class="card my-2 col-6">
+      <img class="card-img-top" src="<%= photo.image %>" alt="<%= photo %>" />
+      <form
+        class="d-flex justify-content-center m-3"
+        action="/courts/<%= court._id %>/photos/<%= photo._id %>?_method=DELETE"
+        method="POST"
+      >
+        <button class="btn btn-sm btn-danger">DELETE</button>
+      </form>
+    </div>
+    <% }) %>
+  </div>
 </div>
