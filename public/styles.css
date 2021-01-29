@@ -44,3 +44,7 @@ footer {
   padding: 5%;
   background-color: rgb(231, 227, 153);
 }
+
+star-rating {
+  --star-rating-color: rgb(193, 181, 113);
+}

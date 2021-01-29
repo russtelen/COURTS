@@ -22,7 +22,14 @@
       <p>Type: <%= court.court %> court</p>
       <p>Avg number of players: <%= court.avgNumberOfPlayers %></p>
       <% if(getAverageRating() > 0) { %>
-      <p>Average Rating: <%= getAverageRating() %> Stars</p>
+      <p>
+        Average Rating:
+        <star-rating
+          stars="5"
+          rating="<%= getAverageRating() %>"
+          read-only
+        ></star-rating>
+      </p>
       <% } else { %>
       <p>No ratings yet</p>
       <% } %>
@@ -100,7 +107,14 @@
       <% court.reviews.map(review => { %>
       <div class="media row">
         <div class="media-body col-11">
-          <h5 class="mt-0">Rating: <%= review.rating %> stars</h5>
+          <h5 class="mt-0">
+            Rating:
+            <star-rating
+              stars="5"
+              rating="<%= review.rating %>"
+              read-only
+            ></star-rating>
+          </h5>
           <%= review.body %>
         </div>
         <div class="col-1">
