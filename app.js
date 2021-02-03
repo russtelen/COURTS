@@ -11,12 +11,11 @@ const Review = require("./models/reviews");
 const Photo = require("./models/photos");
 const catchAsync = require("./utils/catchAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const {
-  courtJoiSchema,
-  reviewSchema,
-  photoSchema,
-} = require("./utils/joiSchemas");
+const { reviewSchema, photoSchema } = require("./utils/joiSchemas");
 const dotenv = require("dotenv");
+// REQUIRE-ROUTES
+//---------------
+const courts = require("./routes/courts");
 // ==============================================
 // CONFIG
 // =============================================
@@ -47,7 +46,7 @@ dotenv.config();
 let localDb = "mongodb://localhost:27017/courts";
 let atlasDb = process.env.db;
 mongoose
-  .connect(atlasDb, {
+  .connect(localDb, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -63,17 +62,6 @@ mongoose
 // ==============================================
 // CUSTOM MIDDLEWARES
 // ==============================================
-const validateCourt = (req, res, next) => {
-  const { error } = courtJoiSchema.validate(req.body);
-
-  if (error) {
-    const msg = error.details.map((e) => e.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
-
 const validateReview = (req, res, next) => {
   const { error } = reviewSchema.validate(req.body);
 
@@ -99,113 +87,15 @@ const validatePhoto = (req, res, next) => {
 // =============================================
 // ROUTES
 // =============================================
-// COURTS ROUTES
-//-----------------------
 // get
 // home page
 app.get("/", (req, res) => {
   res.render("home");
 });
 
-// get
-// all courts
-// render index.ejs
-app.get(
-  "/courts",
-  catchAsync(async (req, res) => {
-    const courts = await Court.find({});
-
-    res.render("courts/index", { courts });
-  })
-);
-
-// get
-// form to add new court
-// render new.ejs
-app.get(
-  "/courts/new",
-  catchAsync(async (req, res) => {
-    res.render("courts/new");
-  })
-);
-
-// get
-// one court
-// render show.ejs
-app.get(
-  "/courts/:id",
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const court = await Court.findById(id)
-      .populate("reviews")
-      .populate("photos");
-
-    const getAverageRating = () => {
-      // get average rating of court
-      var total = 0;
-      const ratingArray = court.reviews.map((review) => {
-        return review.rating;
-      });
-      ratingArray.forEach((rating) => {
-        total += rating;
-      });
-      var averageRating = total / ratingArray.length;
-
-      return averageRating;
-    };
-
-    res.render("courts/show", { court, getAverageRating });
-  })
-);
-
-// get
-// form to add new court
-// render new.ejs
-app.get(
-  "/courts/:id/edit",
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const court = await Court.findOne({ _id: id });
-    res.render("courts/edit", { court });
-  })
-);
-
-// post
-// new court
-app.post(
-  "/courts",
-  validateCourt,
-  catchAsync(async (req, res) => {
-    const court = new Court(req.body);
-    await court.save();
-    res.redirect("/courts");
-  })
-);
-
-// put
-// update court selected by id
-app.put(
-  "/courts/:id",
-  validateCourt,
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    await Court.findOneAndUpdate({ _id: id }, req.body, {
-      useFindAndModify: false,
-    });
-    res.redirect(`/courts/${id}`);
-  })
-);
-
-// delete
-// delete court selected by id
-app.delete(
-  "/courts/:id",
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    await Court.findByIdAndDelete(id);
-    res.redirect("/courts");
-  })
-);
+// COURTS ROUTES
+//-----------------------
+app.use("/courts", courts);
 
 // REVIEW ROUTES
 //-----------------------
