@@ -6,17 +6,13 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const mongoose = require("mongoose");
-const Court = require("./models/courts");
-const Review = require("./models/reviews");
-const Photo = require("./models/photos");
-const catchAsync = require("./utils/catchAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const { photoSchema } = require("./utils/joiSchemas");
 const dotenv = require("dotenv");
 // REQUIRE-ROUTES
 //---------------
 const courts = require("./routes/courts");
 const reviews = require("./routes/reviews");
+const photos = require("./routes/photos");
 // ==============================================
 // CONFIG
 // =============================================
@@ -60,20 +56,6 @@ mongoose
     console.log(e);
   });
 
-// ==============================================
-// CUSTOM MIDDLEWARES
-// ==============================================
-const validatePhoto = (req, res, next) => {
-  const { error } = photoSchema.validate(req.body);
-
-  if (error) {
-    const msg = error.details.map((e) => e.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
-
 // =============================================
 // ROUTES
 // =============================================
@@ -86,53 +68,14 @@ app.get("/", (req, res) => {
 // COURTS ROUTES
 //-----------------------
 app.use("/courts", courts);
+
 // REVIEW ROUTES
 //-----------------------
 app.use("/courts/:id", reviews);
+
 // PHOTO ROUTES
 //-----------------------
-// get
-// all photos
-app.get(
-  "/courts/:id/photos",
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const court = await Court.findById(id).populate("photos");
-    var photos = court.photos;
-
-    res.render("photos/index", { photos, court });
-  })
-);
-
-// post
-// one photo associated to a court
-app.post(
-  "/courts/:id/photos",
-  validatePhoto,
-  catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const court = await Court.findById(id);
-    const photo = new Photo(req.body);
-    court.photos.push(photo);
-    await court.save();
-    await photo.save();
-    res.redirect(`/courts/${id}`);
-  })
-);
-
-//delete
-//one photo associated to a court
-app.delete(
-  "/courts/:courtId/photos/:photoId",
-  catchAsync(async (req, res) => {
-    const { courtId, photoId } = req.params;
-    const court = await Court.findByIdAndUpdate(courtId, {
-      $pull: { photos: photoId },
-    });
-    await Photo.findByIdAndDelete(photoId);
-    res.redirect(`/courts/${court._id}`);
-  })
-);
+app.use("/courts/:id", photos);
 
 // ==============================================
 // ERROR HANDLERS
