@@ -24,7 +24,6 @@ const validateCourt = (req, res, next) => {
 // ==============================================
 // ROUTES
 // ==============================================
-
 // get
 // all courts
 // render index.ejs
@@ -107,7 +106,7 @@ router.put(
   validateCourt,
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    await Court.findOneAndUpdate({ _id: id }, req.body, {
+    await Court.findByIdAndUpdate(id, req.body, {
       useFindAndModify: false,
     });
     res.redirect(`/courts/${id}`);
