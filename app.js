@@ -43,7 +43,7 @@ app.use(methodOverride("_method"));
 dotenv.config();
 
 // Connect Mongoose
-let localDb = "mongodb://localhost:27017/courts";
+let localDb = process.env.localDb;
 let atlasDb = process.env.db;
 mongoose
   .connect(localDb, {
