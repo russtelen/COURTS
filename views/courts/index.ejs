@@ -15,7 +15,12 @@
 <div class="row d-flex justify-content-center my-5">
   <% courts.map(court => { %>
   <div class="card col-md-4 m-1" style="width: 25rem">
-    <img class="card-img-top" src="<%=court.image %>" alt="Card image cap" />
+    <img
+      class="card-img-top"
+      src="<%=court.image %>"
+      alt="Card image cap"
+      style="max-height: 200px; object-fit: cover"
+    />
     <div class="card-body">
       <h5 class="card-title"><%= court.title %></h5>
       <p class="text-muted"><%= court.location%></p>
