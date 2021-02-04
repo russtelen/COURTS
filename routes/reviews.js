@@ -42,6 +42,7 @@ router.post(
     //save both review and court
     await court.save();
     await review.save();
+    req.flash("success", "Successfully addded review");
     res.redirect(`/courts/${id}`);
   })
 );
@@ -56,6 +57,7 @@ router.delete(
       $pull: { reviews: reviewId },
     });
     await Review.findByIdAndDelete(reviewId);
+    req.flash("success", "Successfully deleted review");
     res.redirect(`/courts/${court._id}`);
   })
 );
