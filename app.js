@@ -61,7 +61,7 @@ dotenv.config();
 let localDb = process.env.localDb;
 let atlasDb = process.env.db;
 mongoose
-  .connect(localDb, {
+  .connect(atlasDb, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
