@@ -2,7 +2,7 @@
 <div
   class="jumbotron jumbotron-fluid"
   style="
-    background-image: url('https://images.daznservices.com/di/library/NBA_Global_CMS_image_storage/69/e8/lebron-james-dunks-against-the-houston-rockets_1dhr67o0nxqon1rrueli8yt3y9.jpg?t=583136832&quality=80');
+    background-image: url('https://images.unsplash.com/photo-1544919982-b61976f0ba43?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -12,18 +12,25 @@
 
 <p class="text-center display-1">All Courts</p>
 
-<div class="row d-flex justify-content-center my-5">
-  <% courts.map(court => { %>
-  <div class="card col-md-4 m-1" style="width: 25rem">
-    <img class="card-img-top" src="<%=court.image %>" alt="Card image cap" />
-    <div class="card-body">
-      <h5 class="card-title"><%= court.title %></h5>
-      <p class="text-muted"><%= court.location%></p>
-      <p class="card-text"><%= court.description %></p>
-      <a href="/courts/<%= court._id %>" class="btn card-button"
-        >Court details</a
-      >
+<div class="container">
+  <div class="row d-flex justify-content-center my-5">
+    <% courts.map(court => { %>
+    <div class="card col-md-4 m-1" style="width: 25rem">
+      <img
+        class="card-img-top"
+        src="<%=court.image %>"
+        alt="Card image cap"
+        style="max-height: 200px; object-fit: cover"
+      />
+      <div class="card-body">
+        <h5 class="card-title"><%= court.title %></h5>
+        <p class="text-muted"><%= court.location%></p>
+        <p class="card-text"><%= court.description %></p>
+        <a href="/courts/<%= court._id %>" class="btn card-button"
+          >Court details</a
+        >
+      </div>
     </div>
+    <% }) %>
   </div>
-  <% }) %>
 </div>

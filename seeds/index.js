@@ -12,7 +12,7 @@ const dotenv = require("dotenv");
 // Read .env file
 dotenv.config({ path: "../.env" });
 
-let localDb = "mongodb://localhost:27017/courts";
+let localDb = process.env.localDb;
 let atlasDb = process.env.db;
 // Connect Mongoose
 mongoose
