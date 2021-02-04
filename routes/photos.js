@@ -33,7 +33,10 @@ router.get(
     const { id } = req.params;
     const court = await Court.findById(id).populate("photos");
     var photos = court.photos;
-
+    if (!court) {
+      req.flash("error", "Cannot find that court");
+      return res.redirect("/courts");
+    }
     res.render("photos/index", { photos, court });
   })
 );

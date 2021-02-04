@@ -57,6 +57,11 @@ router.get(
       .populate("reviews")
       .populate("photos");
 
+    if (!court) {
+      req.flash("error", "Cannot find that court");
+      return res.redirect("/courts");
+    }
+
     const getAverageRating = () => {
       // get average rating of court
       var total = 0;
@@ -83,6 +88,10 @@ router.get(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const court = await Court.findOne({ _id: id });
+    if (!court) {
+      req.flash("error", "Cannot find that court");
+      return res.redirect("/courts");
+    }
     res.render("courts/edit", { court });
   })
 );
