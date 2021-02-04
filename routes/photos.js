@@ -33,7 +33,10 @@ router.get(
     const { id } = req.params;
     const court = await Court.findById(id).populate("photos");
     var photos = court.photos;
-
+    if (!court) {
+      req.flash("error", "Cannot find that court");
+      return res.redirect("/courts");
+    }
     res.render("photos/index", { photos, court });
   })
 );
@@ -50,6 +53,7 @@ router.post(
     court.photos.push(photo);
     await court.save();
     await photo.save();
+    req.flash("success", "Successfully added new photo");
     res.redirect(`/courts/${id}`);
   })
 );
@@ -64,6 +68,7 @@ router.delete(
       $pull: { photos: photoId },
     });
     await Photo.findByIdAndDelete(photoId);
+    req.flash("success", "Successfully deleted photo");
     res.redirect(`/courts/${court._id}`);
   })
 );

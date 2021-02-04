@@ -8,6 +8,8 @@ const ejsMate = require("ejs-mate");
 const mongoose = require("mongoose");
 const ExpressError = require("./utils/ExpressError.js");
 const dotenv = require("dotenv");
+const session = require("express-session");
+const flash = require("connect-flash");
 // REQUIRE-ROUTES
 //---------------
 const courts = require("./routes/courts");
@@ -36,6 +38,22 @@ app.set("views", path.join(__dirname, "/views"));
 // Override with POST having ?_method=PATCH or DELETE
 app.use(methodOverride("_method"));
 
+// Express Session
+const sessionConfig = {
+  secret: "secretCode",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // expires in 1 week
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+app.use(session(sessionConfig));
+
+// Connect flash
+app.use(flash());
+
 // Read .env file
 dotenv.config();
 
@@ -43,7 +61,7 @@ dotenv.config();
 let localDb = process.env.localDb;
 let atlasDb = process.env.db;
 mongoose
-  .connect(localDb, {
+  .connect(atlasDb, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -55,6 +73,16 @@ mongoose
     console.log("MONGO CONNECTION ERROR :(");
     console.log(e);
   });
+
+// ==============================================
+// CUSTOM MIDDLEWARE
+// ==============================================
+// middleware for flash (success and error pop up/notifications)
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
 
 // =============================================
 // ROUTES
