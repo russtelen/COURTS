@@ -95,6 +95,7 @@ router.post(
   catchAsync(async (req, res) => {
     const court = new Court(req.body);
     await court.save();
+    req.flash("success", "Successfully made a new court");
     res.redirect("/courts");
   })
 );
@@ -109,6 +110,7 @@ router.put(
     await Court.findByIdAndUpdate(id, req.body, {
       useFindAndModify: false,
     });
+    req.flash("success", "Successfully updated court");
     res.redirect(`/courts/${id}`);
   })
 );
@@ -120,6 +122,7 @@ router.delete(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     await Court.findByIdAndDelete(id);
+    req.flash("success", "Successfully deleted court");
     res.redirect("/courts");
   })
 );
