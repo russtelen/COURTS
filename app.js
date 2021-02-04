@@ -74,6 +74,17 @@ mongoose
     console.log(e);
   });
 
+// ==============================================
+// CUSTOM MIDDLEWARE
+// ==============================================
+// middleware for flash (success and error pop up/notifications)
+app.use((req, res, next) => {
+  const { success, error } = res.locals;
+  success = req.flash("success");
+  error = req.flash("error");
+  next();
+});
+
 // =============================================
 // ROUTES
 // =============================================
