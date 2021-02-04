@@ -50,6 +50,7 @@ router.post(
     court.photos.push(photo);
     await court.save();
     await photo.save();
+    req.flash("success", "Successfully added new photo");
     res.redirect(`/courts/${id}`);
   })
 );
@@ -64,6 +65,7 @@ router.delete(
       $pull: { photos: photoId },
     });
     await Photo.findByIdAndDelete(photoId);
+    req.flash("success", "Successfully deleted photo");
     res.redirect(`/courts/${court._id}`);
   })
 );
