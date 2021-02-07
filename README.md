@@ -2,7 +2,9 @@
 
 ## About
 
-    Courts is an app that allows basketball players to view bsaketball courts nearby. Users are also able to upload photos of the court they were playing at. In addition, players can leave ratings and reviews to reflect their experience on a specific court
+Courts is an app that allows basketball players to view bsaketball courts nearby.
+Users are also able to upload photos of the court they were playing at.
+In addition, players can leave ratings and reviews to reflect their experience on a specific court
 
 ## View the App
 
