@@ -20,6 +20,7 @@ const User = require("./models/users");
 const courts = require("./routes/courts");
 const reviews = require("./routes/reviews");
 const photos = require("./routes/photos");
+const users = require("./routes/users");
 
 // ==============================================
 // CONFIG
@@ -117,6 +118,10 @@ app.use("/courts/:id", reviews);
 // PHOTO ROUTES
 //-----------------------
 app.use("/courts/:id", photos);
+
+// USER ROUTES
+//-----------------------
+app.use("/", users);
 
 // ==============================================
 // ERROR HANDLERS
