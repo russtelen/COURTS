@@ -10,11 +10,18 @@ const ExpressError = require("./utils/ExpressError.js");
 const dotenv = require("dotenv");
 const session = require("express-session");
 const flash = require("connect-flash");
+// REQUIRE-AUTH
+//---------------
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/users");
 // REQUIRE-ROUTES
 //---------------
 const courts = require("./routes/courts");
 const reviews = require("./routes/reviews");
 const photos = require("./routes/photos");
+const users = require("./routes/users");
+
 // ==============================================
 // CONFIG
 // =============================================
@@ -54,6 +61,13 @@ app.use(session(sessionConfig));
 // Connect flash
 app.use(flash());
 
+// Passport/Auth
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // Read .env file
 dotenv.config();
 
@@ -77,8 +91,9 @@ mongoose
 // ==============================================
 // CUSTOM MIDDLEWARE
 // ==============================================
-// middleware for flash (success and error pop up/notifications)
+// middleware for global variables (global states)
 app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
@@ -104,6 +119,10 @@ app.use("/courts/:id", reviews);
 // PHOTO ROUTES
 //-----------------------
 app.use("/courts/:id", photos);
+
+// USER ROUTES
+//-----------------------
+app.use("/", users);
 
 // ==============================================
 // ERROR HANDLERS

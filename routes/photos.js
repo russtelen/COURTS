@@ -6,21 +6,7 @@ const router = express.Router({ mergeParams: true });
 const Court = require("../models/courts");
 const Photo = require("../models/photos");
 const catchAsync = require("../utils/catchAsync.js");
-const { photoSchema } = require("../utils/joiSchemas");
-
-// ==============================================
-// CUSTOM MIDDLEWARES
-// ==============================================
-const validatePhoto = (req, res, next) => {
-  const { error } = photoSchema.validate(req.body);
-
-  if (error) {
-    const msg = error.details.map((e) => e.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
+const { validatePhoto, isLoggedIn } = require("../utils/middlewares");
 
 // ==============================================
 // ROUTES
@@ -29,6 +15,7 @@ const validatePhoto = (req, res, next) => {
 // all photos
 router.get(
   "/photos",
+  isLoggedIn,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const court = await Court.findById(id).populate("photos");
@@ -45,6 +32,7 @@ router.get(
 // one photo associated to a court
 router.post(
   "/photos",
+  isLoggedIn,
   validatePhoto,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -62,6 +50,7 @@ router.post(
 //one photo associated to a court
 router.delete(
   "/photos/:photoId",
+  isLoggedIn,
   catchAsync(async (req, res) => {
     const { id, photoId } = req.params;
     const court = await Court.findByIdAndUpdate(id, {
