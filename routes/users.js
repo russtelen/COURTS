@@ -5,6 +5,7 @@ const express = require("express");
 const passport = require("passport");
 const router = express.Router();
 const catchAsync = require("../utils/catchAsync.js");
+const User = require("../models/users");
 
 // ==============================================
 // ROUTES
@@ -29,7 +30,7 @@ router.post(
   catchAsync(async (req, res) => {
     try {
       const { username, email, password } = req.body;
-      const user = await new User(username, email);
+      const user = await new User({ username, email });
       const registeredUser = await User.register(user, password);
       req.login(registeredUser, (err) => {
         if (err) return next(err);
@@ -47,19 +48,16 @@ router.post(
 // login user
 router.post(
   "/login",
-  passport.authenticate(
-    "local",
-    {
-      failureFlash: true,
-      failureRedirect: "/login",
-    },
-    (req, res) => {
-      req.flash("success", "Welcome back!");
-      const redirectUrl = req.session.returnTo || "/courts";
-      delete req.session.returnTo; // delete returnTo from session
-      res.redirect(redirectUrl);
-    }
-  )
+  passport.authenticate("local", {
+    failureFlash: true,
+    failureRedirect: "/login",
+  }),
+  (req, res) => {
+    req.flash("success", "Welcome back!");
+    const redirectUrl = req.session.returnTo || "/courts";
+    delete req.session.returnTo; // delete returnTo from session
+    res.redirect(redirectUrl);
+  }
 );
 
 // logout
