@@ -45,3 +45,17 @@ module.exports.validateReview = (req, res, next) => {
     next();
   }
 };
+
+// Middleware to check if there is a user logged in
+module.exports.isLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    // store url they are requesting to session
+    // returnTo -> made up (can be anything
+    // originalUrl -> from express
+    req.session.returnTo = req.originalUrl;
+
+    req.flash("error", "You must be logged in to do that !");
+    return res.redirect("/login");
+  }
+  next();
+};

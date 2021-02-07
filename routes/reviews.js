@@ -6,7 +6,7 @@ const router = express.Router({ mergeParams: true });
 const Court = require("../models/courts");
 const Review = require("../models/reviews");
 const catchAsync = require("../utils/catchAsync.js");
-const { validateReview } = require("../utils/middlewares");
+const { validateReview, isLoggedIn } = require("../utils/middlewares");
 // ==============================================
 // ROUTES
 // ==============================================
@@ -14,6 +14,7 @@ const { validateReview } = require("../utils/middlewares");
 // one review associated to a court
 router.post(
   "/reviews",
+  isLoggedIn,
   validateReview,
   catchAsync(async (req, res) => {
     // get court id from params
@@ -36,6 +37,7 @@ router.post(
 //one review associated to a court
 router.delete(
   "/reviews/:reviewId",
+  isLoggedIn,
   catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;
     const court = await Court.findByIdAndUpdate(id, {
