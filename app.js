@@ -10,11 +10,17 @@ const ExpressError = require("./utils/ExpressError.js");
 const dotenv = require("dotenv");
 const session = require("express-session");
 const flash = require("connect-flash");
+// REQUIRE-AUTH
+//---------------
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/users");
 // REQUIRE-ROUTES
 //---------------
 const courts = require("./routes/courts");
 const reviews = require("./routes/reviews");
 const photos = require("./routes/photos");
+
 // ==============================================
 // CONFIG
 // =============================================
@@ -53,6 +59,13 @@ app.use(session(sessionConfig));
 
 // Connect flash
 app.use(flash());
+
+// Passport/Auth
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Read .env file
 dotenv.config();
