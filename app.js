@@ -61,7 +61,7 @@ dotenv.config();
 let localDb = process.env.localDb;
 let atlasDb = process.env.db;
 mongoose
-  .connect(atlasDb, {
+  .connect(localDb, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -77,7 +77,7 @@ mongoose
 // ==============================================
 // CUSTOM MIDDLEWARE
 // ==============================================
-// middleware for flash (success and error pop up/notifications)
+// middleware for global variables (global states)
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");

@@ -6,22 +6,7 @@ const router = express.Router({ mergeParams: true });
 const Court = require("../models/courts");
 const Review = require("../models/reviews");
 const catchAsync = require("../utils/catchAsync.js");
-const { reviewSchema } = require("../utils/joiSchemas");
-
-// ==============================================
-// CUSTOM MIDDLEWARES
-// ==============================================
-const validateReview = (req, res, next) => {
-  const { error } = reviewSchema.validate(req.body);
-
-  if (error) {
-    const msg = error.details.map((e) => e.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
-
+const { validateReview } = require("../utils/middlewares");
 // ==============================================
 // ROUTES
 // ==============================================

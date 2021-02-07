@@ -6,21 +6,7 @@ const router = express.Router({ mergeParams: true });
 const Court = require("../models/courts");
 const Photo = require("../models/photos");
 const catchAsync = require("../utils/catchAsync.js");
-const { photoSchema } = require("../utils/joiSchemas");
-
-// ==============================================
-// CUSTOM MIDDLEWARES
-// ==============================================
-const validatePhoto = (req, res, next) => {
-  const { error } = photoSchema.validate(req.body);
-
-  if (error) {
-    const msg = error.details.map((e) => e.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
+const { validatePhoto } = require("../utils/middlewares");
 
 // ==============================================
 // ROUTES

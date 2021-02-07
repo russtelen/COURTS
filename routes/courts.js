@@ -5,21 +5,7 @@ const express = require("express");
 const router = express.Router();
 const Court = require("../models/courts");
 const catchAsync = require("../utils/catchAsync.js");
-const { courtJoiSchema } = require("../utils/joiSchemas");
-
-// ==============================================
-// CUSTOM MIDDLEWARES
-// ==============================================
-const validateCourt = (req, res, next) => {
-  const { error } = courtJoiSchema.validate(req.body);
-
-  if (error) {
-    const msg = error.details.map((e) => e.message).join(",");
-    throw new ExpressError(msg, 400);
-  } else {
-    next();
-  }
-};
+const { validateCourt } = require("../utils/middlewares");
 
 // ==============================================
 // ROUTES
