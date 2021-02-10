@@ -6,7 +6,7 @@ const router = express.Router({ mergeParams: true });
 const Court = require("../models/courts");
 const Photo = require("../models/photos");
 const catchAsync = require("../utils/catchAsync.js");
-const { validatePhoto, isLoggedIn } = require("../utils/middlewares");
+const { validatePhoto, isLoggedIn, isAuthor } = require("../utils/middlewares");
 
 // ==============================================
 // ROUTES

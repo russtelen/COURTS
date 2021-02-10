@@ -6,7 +6,11 @@ const router = express.Router({ mergeParams: true });
 const Court = require("../models/courts");
 const Review = require("../models/reviews");
 const catchAsync = require("../utils/catchAsync.js");
-const { validateReview, isLoggedIn } = require("../utils/middlewares");
+const {
+  validateReview,
+  isLoggedIn,
+  isAuthor,
+} = require("../utils/middlewares");
 // ==============================================
 // ROUTES
 // ==============================================
