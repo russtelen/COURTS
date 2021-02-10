@@ -19,10 +19,11 @@ router.post(
   catchAsync(async (req, res) => {
     // get court id from params
     const { id } = req.params;
+    const { body, rating } = req.body;
     // find court by :id
     const court = await Court.findById(id);
     // create new review based off req.body
-    const review = new Review(req.body);
+    const review = new Review({ body, rating, author: req.user._id });
     //push review in court.reviews array (model)
     court.reviews.push(review);
     //save both review and court

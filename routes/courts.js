@@ -54,7 +54,6 @@ router.get(
         },
       })
       .populate("author");
-
     if (!court) {
       req.flash("error", "Cannot find that court");
       return res.redirect("/courts");

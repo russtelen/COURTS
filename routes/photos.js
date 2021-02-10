@@ -18,7 +18,12 @@ router.get(
   isLoggedIn,
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const court = await Court.findById(id).populate("photos");
+    const court = await Court.findById(id).populate({
+      path: "photos",
+      populate: {
+        path: "author",
+      },
+    });
     var photos = court.photos;
     if (!court) {
       req.flash("error", "Cannot find that court");
@@ -36,8 +41,9 @@ router.post(
   validatePhoto,
   catchAsync(async (req, res) => {
     const { id } = req.params;
+    const { image } = req.body;
     const court = await Court.findById(id);
-    const photo = new Photo(req.body);
+    const photo = new Photo({ image, author: req.user._id });
     court.photos.push(photo);
     await court.save();
     await photo.save();
