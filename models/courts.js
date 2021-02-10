@@ -60,6 +60,10 @@ const courtSchema = new Schema({
       ref: "Photo",
     },
   ],
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 // Mongoose middleware to delete reviews when court is deleted
