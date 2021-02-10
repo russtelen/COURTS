@@ -32,7 +32,7 @@
       </p>
       <% } else { %>
       <p>No ratings yet</p>
-      <% } %> <% if (currentUser && court.author.equals(currentUser)){ %>
+      <% } %> <% if (currentUser && court.author.equals(currentUser._id)){ %>
       <a href="/courts/<%= court._id %>/edit" class="btn btn-sm edit-button"
         >Edit Court</a
       >
@@ -170,8 +170,11 @@
       <div class="valid-feedback">Looks good!</div>
       <div class="invalid-feedback">Please enter your review</div>
     </div>
-
+    <% if(currentUser) { %>
     <button type="submit" class="btn btn-success mb-3">Submit</button>
+    <% } else { %>
+    <p><a href="/login">Login</a> to leave a review</p>
+    <% } %>
   </form>
 </div>
 

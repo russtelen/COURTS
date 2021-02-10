@@ -16,7 +16,7 @@ let localDb = process.env.localDb;
 let atlasDb = process.env.db;
 // Connect Mongoose
 mongoose
-  .connect(localDb, {
+  .connect(atlasDb, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -41,7 +41,7 @@ const seedDB = async () => {
     closing_hours: 10,
     court: "indoor",
     avgNumberOfPlayers: 107,
-    author: "60204f67518d5873b800a6ab",
+    author: "602364511441c751174a4928",
   });
 
   await Court.deleteMany({});
@@ -58,7 +58,7 @@ const seedDB = async () => {
       closing_hours: 10,
       court: "indoor",
       avgNumberOfPlayers: 107,
-      author: "60204f67518d5873b800a6ab",
+      author: "602364511441c751174a4928",
     },
     {
       title: "Kitsilano Hoops",
@@ -71,7 +71,7 @@ const seedDB = async () => {
       closing_hours: 10,
       court: "outdoor",
       avgNumberOfPlayers: 52,
-      author: "60204f67518d5873b800a6ab",
+      author: "602364511441c751174a4928",
     },
     {
       title: "House of Mamba",
@@ -84,7 +84,7 @@ const seedDB = async () => {
       closing_hours: 11,
       court: "indoor",
       avgNumberOfPlayers: 80,
-      author: "60204f67518d5873b800a6ab",
+      author: "602364511441c751174a4928",
     },
     {
       title: "Pigalle",
@@ -97,7 +97,7 @@ const seedDB = async () => {
       closing_hours: 10,
       court: "outdoor",
       avgNumberOfPlayers: 20,
-      author: "60204f67518d5873b800a6ab",
+      author: "602364511441c751174a4928",
     },
     {
       title: "People’s place",
@@ -109,7 +109,7 @@ const seedDB = async () => {
       closing_hours: 11,
       court: "outdoor",
       avgNumberOfPlayers: 16,
-      author: "60204f67518d5873b800a6ab",
+      author: "602364511441c751174a4928",
     },
     {
       title: "Choi Hung Estate",
@@ -121,7 +121,7 @@ const seedDB = async () => {
       closing_hours: 10,
       court: "outdoor",
       avgNumberOfPlayers: 15,
-      author: "60204f67518d5873b800a6ab",
+      author: "602364511441c751174a4928",
     },
   ]);
 
@@ -153,7 +153,7 @@ const seedDB = async () => {
       closing_hours: 9,
       court: indoorOutdoor[randomIndoor],
       avgNumberOfPlayers: randomPlayers,
-      author: "60204f67518d5873b800a6ab",
+      author: "602364511441c751174a4928",
     });
 
     await court.save();
