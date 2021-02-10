@@ -41,8 +41,19 @@ router.get(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const court = await Court.findById(id)
-      .populate("reviews")
-      .populate("photos");
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "author",
+        },
+      })
+      .populate({
+        path: "photos",
+        populate: {
+          path: "author",
+        },
+      })
+      .populate("author");
 
     if (!court) {
       req.flash("error", "Cannot find that court");
