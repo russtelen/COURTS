@@ -6,7 +6,7 @@ const router = express.Router({ mergeParams: true });
 const Court = require("../models/courts");
 const Photo = require("../models/photos");
 const catchAsync = require("../utils/catchAsync.js");
-const { validatePhoto, isLoggedIn } = require("../utils/middlewares");
+const { validatePhoto, isLoggedIn, isAuthor } = require("../utils/middlewares");
 
 // ==============================================
 // ROUTES
@@ -18,7 +18,12 @@ router.get(
   isLoggedIn,
   catchAsync(async (req, res) => {
     const { id } = req.params;
-    const court = await Court.findById(id).populate("photos");
+    const court = await Court.findById(id).populate({
+      path: "photos",
+      populate: {
+        path: "author",
+      },
+    });
     var photos = court.photos;
     if (!court) {
       req.flash("error", "Cannot find that court");
@@ -36,8 +41,9 @@ router.post(
   validatePhoto,
   catchAsync(async (req, res) => {
     const { id } = req.params;
+    const { image } = req.body;
     const court = await Court.findById(id);
-    const photo = new Photo(req.body);
+    const photo = new Photo({ image, author: req.user._id });
     court.photos.push(photo);
     await court.save();
     await photo.save();
@@ -50,6 +56,7 @@ router.post(
 //one photo associated to a court
 router.delete(
   "/photos/:photoId",
+  isAuthor,
   isLoggedIn,
   catchAsync(async (req, res) => {
     const { id, photoId } = req.params;

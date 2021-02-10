@@ -32,8 +32,7 @@
       </p>
       <% } else { %>
       <p>No ratings yet</p>
-      <% } %>
-
+      <% } %> <% if (currentUser && court.author.equals(currentUser)){ %>
       <a href="/courts/<%= court._id %>/edit" class="btn btn-sm edit-button"
         >Edit Court</a
       >
@@ -44,6 +43,7 @@
       >
         <button class="btn btn-sm delete-button">Delete</button>
       </form>
+      <% } %>
     </div>
   </div>
 </div>
@@ -183,7 +183,7 @@
       <div class="media row">
         <div class="media-body col-11">
           <h5 class="mt-0">
-            Rating:
+            Submitted by: <%= review.author.username %>
             <star-rating
               stars="5"
               rating="<%= review.rating %>"
@@ -193,6 +193,7 @@
           <%= review.body %>
         </div>
         <div class="col-1">
+          <% if(currentUser && review.author.equals(currentUser._id)){ %>
           <form
             action="/courts/<%= court._id %>/reviews/<%= review._id %>?_method=DELETE"
             method="POST"
@@ -201,6 +202,7 @@
               <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
           </form>
+          <% } %>
         </div>
         <hr />
       </div>

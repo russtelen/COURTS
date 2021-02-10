@@ -5,7 +5,7 @@ const express = require("express");
 const router = express.Router();
 const Court = require("../models/courts");
 const catchAsync = require("../utils/catchAsync.js");
-const { validateCourt, isLoggedIn } = require("../utils/middlewares");
+const { validateCourt, isLoggedIn, isAuthor } = require("../utils/middlewares");
 
 // ==============================================
 // ROUTES
@@ -41,9 +41,19 @@ router.get(
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const court = await Court.findById(id)
-      .populate("reviews")
-      .populate("photos");
-
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "author",
+        },
+      })
+      .populate({
+        path: "photos",
+        populate: {
+          path: "author",
+        },
+      })
+      .populate("author");
     if (!court) {
       req.flash("error", "Cannot find that court");
       return res.redirect("/courts");
@@ -72,6 +82,7 @@ router.get(
 // render new.ejs
 router.get(
   "/:id/edit",
+  isAuthor,
   isLoggedIn,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -103,6 +114,7 @@ router.post(
 router.put(
   "/:id",
   isLoggedIn,
+  isAuthor,
   validateCourt,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -118,6 +130,7 @@ router.put(
 // delete court selected by id
 router.delete(
   "/:id",
+  isAuthor,
   isLoggedIn,
   catchAsync(async (req, res) => {
     const { id } = req.params;
