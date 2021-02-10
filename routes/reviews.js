@@ -38,6 +38,7 @@ router.post(
 //one review associated to a court
 router.delete(
   "/reviews/:reviewId",
+  isAuthor,
   isLoggedIn,
   catchAsync(async (req, res) => {
     const { id, reviewId } = req.params;

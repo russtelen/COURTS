@@ -56,6 +56,7 @@ router.post(
 //one photo associated to a court
 router.delete(
   "/photos/:photoId",
+  isAuthor,
   isLoggedIn,
   catchAsync(async (req, res) => {
     const { id, photoId } = req.params;

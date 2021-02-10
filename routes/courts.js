@@ -5,7 +5,7 @@ const express = require("express");
 const router = express.Router();
 const Court = require("../models/courts");
 const catchAsync = require("../utils/catchAsync.js");
-const { validateCourt, isLoggedIn } = require("../utils/middlewares");
+const { validateCourt, isLoggedIn, isAuthor } = require("../utils/middlewares");
 
 // ==============================================
 // ROUTES
@@ -82,6 +82,7 @@ router.get(
 // render new.ejs
 router.get(
   "/:id/edit",
+  isAuthor,
   isLoggedIn,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -113,6 +114,7 @@ router.post(
 router.put(
   "/:id",
   isLoggedIn,
+  isAuthor,
   validateCourt,
   catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -128,6 +130,7 @@ router.put(
 // delete court selected by id
 router.delete(
   "/:id",
+  isAuthor,
   isLoggedIn,
   catchAsync(async (req, res) => {
     const { id } = req.params;
