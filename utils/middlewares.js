@@ -1,12 +1,23 @@
 // =============================================
 // REQUIRE
 // =============================================
+const express = require("express");
+const app = express();
 const {
   courtJoiSchema,
   photoSchema,
   reviewSchema,
 } = require("../utils/joiSchemas");
-
+const Court = require("../models/courts");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("../models/users");
+// Passport/Auth
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 // ==============================================
 // CUSTOM MIDDLEWARES
 // ==============================================
