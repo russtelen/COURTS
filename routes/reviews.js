@@ -2,57 +2,21 @@
 // REQUIRE
 // =============================================
 const express = require("express");
+const { createReview, deleteReview } = require("../controllers/reviews");
 const router = express.Router({ mergeParams: true });
-const Court = require("../models/courts");
-const Review = require("../models/reviews");
-const catchAsync = require("../utils/catchAsync.js");
 const {
   validateReview,
   isLoggedIn,
-  isAuthor,
+  isReviewAuthor,
 } = require("../utils/middlewares");
 // ==============================================
 // ROUTES
 // ==============================================
-// post
-// one review associated to a court
-router.post(
-  "/reviews",
-  isLoggedIn,
-  validateReview,
-  catchAsync(async (req, res) => {
-    // get court id from params
-    const { id } = req.params;
-    const { body, rating } = req.body;
-    // find court by :id
-    const court = await Court.findById(id);
-    // create new review based off req.body
-    const review = new Review({ body, rating, author: req.user._id });
-    //push review in court.reviews array (model)
-    court.reviews.push(review);
-    //save both review and court
-    await court.save();
-    await review.save();
-    req.flash("success", "Successfully addded review");
-    res.redirect(`/courts/${id}`);
-  })
-);
 
-//delete
-//one review associated to a court
-router.delete(
-  "/reviews/:reviewId",
-  isAuthor,
-  isLoggedIn,
-  catchAsync(async (req, res) => {
-    const { id, reviewId } = req.params;
-    const court = await Court.findByIdAndUpdate(id, {
-      $pull: { reviews: reviewId },
-    });
-    await Review.findByIdAndDelete(reviewId);
-    req.flash("success", "Successfully deleted review");
-    res.redirect(`/courts/${court._id}`);
-  })
-);
+router.route("/reviews").post(isLoggedIn, validateReview, createReview);
+
+router
+  .route("/reviews/:reviewId")
+  .delete(isLoggedIn, isReviewAuthor, deleteReview);
 
 module.exports = router;
