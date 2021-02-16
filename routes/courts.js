@@ -3,7 +3,11 @@
 // =============================================
 const express = require("express");
 const router = express.Router();
-const { validateCourt, isLoggedIn, isAuthor } = require("../utils/middlewares");
+const {
+  validateCourt,
+  isLoggedIn,
+  isCourtAuthor,
+} = require("../utils/middlewares");
 const {
   index,
   renderNewForm,
@@ -25,9 +29,9 @@ router.get("/new", isLoggedIn, renderNewForm);
 router
   .route("/:id")
   .get(showCourt)
-  .put(isLoggedIn, isAuthor, validateCourt, editCourt)
-  .delete(isAuthor, isLoggedIn, deleteCourt);
+  .put(isLoggedIn, isCourtAuthor, validateCourt, editCourt)
+  .delete(isCourtAuthor, isLoggedIn, deleteCourt);
 
-router.route("/:id/edit").get(isAuthor, isLoggedIn, renderEditForm);
+router.route("/:id/edit").get(isCourtAuthor, isLoggedIn, renderEditForm);
 
 module.exports = router;
