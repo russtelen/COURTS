@@ -12,6 +12,7 @@ const Court = require("../models/courts");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("../models/users");
+const Review = require("../models/reviews");
 // Passport/Auth
 app.use(passport.initialize());
 app.use(passport.session());
@@ -71,11 +72,23 @@ module.exports.isLoggedIn = (req, res, next) => {
   next();
 };
 
-// Middleware to check if the user is the author of that post
+// Middleware to check if the user is the author of that court
 module.exports.isCourtAuthor = async (req, res, next) => {
   const { id } = req.params;
   const court = await Court.findById(id);
   if (!court.author.equals(req.user._id)) {
+    req.flash("error", "You do not have permission to do that");
+    return res.redirect(`/courts/${court._id}`);
+  }
+  next();
+};
+
+// Middleware to check if the user is the author of that review
+module.exports.isReviewAuthor = async (req, res, next) => {
+  const { id, reviewId } = req.params;
+  const review = await Review.findById(reviewId);
+  const court = await Court.findById(id);
+  if (!review.author.equals(req.user._id)) {
     req.flash("error", "You do not have permission to do that");
     return res.redirect(`/courts/${court._id}`);
   }
