@@ -3,8 +3,6 @@
 // =============================================
 const express = require("express");
 const router = express.Router();
-const Court = require("../models/courts");
-const catchAsync = require("../utils/catchAsync.js");
 const { validateCourt, isLoggedIn, isAuthor } = require("../utils/middlewares");
 const {
   index,
