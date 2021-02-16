@@ -24,7 +24,7 @@ const {
 
 router.route("/").get(index).post(isLoggedIn, validateCourt, createCourt);
 
-router.get("/new", isLoggedIn, renderNewForm);
+router.route("/new").get(isLoggedIn, renderNewForm);
 
 router
   .route("/:id")
